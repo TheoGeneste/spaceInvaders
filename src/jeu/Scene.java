@@ -17,7 +17,7 @@ public class Scene extends JPanel {
     public GroupeAliens groupeAliens = new GroupeAliens();
     public TirVaisseau tirVaisseau = new TirVaisseau();
 
-    public Chateau tabChateaux[] = new Chateau[4]; // Cr�ation d'un tableau contenant les 4 ch�teaux
+    public Chateau tabChateaux[] = new Chateau[4]; // Creation d'un tableau contenant les 4 chateaux
 
     public TirAlien tirAlien1, tirAlien2, tirAlien3;
 
@@ -26,6 +26,7 @@ public class Scene extends JPanel {
     private Font afficheScore = new Font("Arial", Font.PLAIN, 20);
     private Font afficheTexte = new Font("Arial", Font.PLAIN, 80);
 
+    private int manche = 1;
     public int score = 0;
 
     //Constructeur
@@ -65,6 +66,9 @@ public class Scene extends JPanel {
         g.setFont(afficheScore);
         g.drawString("SCORE : " + score, 400, 25);
 
+        g.setFont(afficheScore);
+        g.drawString("MANCHE : " + manche, 100, 25);
+
         // Dessin du vaisseau
         this.vaisseau.dessinVaisseau(g2);
 
@@ -97,28 +101,28 @@ public class Scene extends JPanel {
             tirAlien1 = new TirAlien(this.groupeAliens.choixAlienQuiTire());}
         if(this.tirAlien1 != null) {
             this.tirAlien1.dessinTirAlien(g2);
-            this.tirAlien1.tirAlienDetruitChateau(tabChateaux); // D�tection contact tirAlien1 avec ch�teau
+            this.tirAlien1.tirAlienDetruitChateau(tabChateaux);
             if(this.tirAlien1.toucheVaisseau(vaisseau) == true) {this.vaisseau.setVivant(false);}
         }
         if(Chrono.compteTours % 750 == 0) {
             tirAlien2 = new TirAlien(this.groupeAliens.choixAlienQuiTire());}
         if(this.tirAlien2 != null) {
             this.tirAlien2.dessinTirAlien(g2);
-            this.tirAlien2.tirAlienDetruitChateau(tabChateaux); // D�tection contact tirAlien2 avec ch�teau
+            this.tirAlien2.tirAlienDetruitChateau(tabChateaux);
             if(this.tirAlien2.toucheVaisseau(vaisseau) == true) {this.vaisseau.setVivant(false);}
         }
         if(Chrono.compteTours % 900 == 0) {
             tirAlien3 = new TirAlien(this.groupeAliens.choixAlienQuiTire());}
         if(this.tirAlien3 != null) {
             this.tirAlien3.dessinTirAlien(g2);
-            this.tirAlien3.tirAlienDetruitChateau(tabChateaux); // D�tection contact tirAlien3 avec ch�teau
+            this.tirAlien3.tirAlienDetruitChateau(tabChateaux);
             if(this.tirAlien3.toucheVaisseau(vaisseau) == true) {this.vaisseau.setVivant(false);}
         }
         // Dessin de la soucoupe
         if(Chrono.compteTours % 2500 == 0) {soucoupe = new Soucoupe();}
         if(this.soucoupe != null) {
             if(this.soucoupe.getxPos()>0) {
-                // D�tection contact tir vaisseau avec soucoupe
+                // Detection contact tir vaisseau avec soucoupe
                 if(this.tirVaisseau.detruitSoucoupe(this.soucoupe) == true) {
                     if(this.soucoupe.getDeplacementx() != 0) {this.score = this.score + Constantes.VALEUR_ALIEN_SOUCOUPE;}
                     this.soucoupe.setDeplacementx(0);
@@ -131,7 +135,11 @@ public class Scene extends JPanel {
         }
 
         if (this.groupeAliens.getNombreAliens() == 0){
+            manche++;
             groupeAliens = new GroupeAliens();
+            float vit = groupeAliens.getVitesse() * (manche/2);
+            groupeAliens.setVitesse(vit);
+            System.out.println(groupeAliens.getVitesse());
         }
         if (this.groupeAliens.positionAlienLePlusBas() > Constantes.Y_POS_VAISSEAU){
             this.vaisseau.destructionVaisseau();

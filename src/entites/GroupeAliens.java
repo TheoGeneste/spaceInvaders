@@ -14,7 +14,7 @@ public class GroupeAliens {
     private int nbLignes = 5;
     private Alien tabAlien[][] = new Alien[nbLignes][nbColonne];
     private boolean vaADroite, pos1;
-    private int vitesse;
+    private float vitesse = Constantes.VITESSE_ALIEN;
 
     Random hasard = new Random();
     private int nombreAliens = Constantes.NOMBRE_ALIEN;
@@ -25,7 +25,6 @@ public class GroupeAliens {
     public GroupeAliens() {
         this.initTableauAliens();
         this.vaADroite = true;
-        this.vitesse = Constantes.VITESSE_ALIEN;
         this.pos1 = true;
     }
 
@@ -38,7 +37,7 @@ public class GroupeAliens {
                 this.tabAlien[ligne][colonne] = new Alien(Constantes.X_POS_INIT_ALIEN + (Constantes.LARGEUR_ALIEN + Constantes.ECART_COLONNES_ALIEN) *
                         colonne, Constantes.ALT_INIT_ALIEN + Constantes.ECART_LIGNES_ALIEN * ligne, "/images/alienMilieu1.png", "/images/alienMilieu2.png");
             }
-            for(int ligne=3; ligne< nbLignes; ligne++) {
+            for(int ligne=3; ligne < nbLignes; ligne++) {
                 this.tabAlien[ligne][colonne] = new Alien(Constantes.X_POS_INIT_ALIEN + (Constantes.LARGEUR_ALIEN + Constantes.ECART_COLONNES_ALIEN)
                         * colonne, Constantes.ALT_INIT_ALIEN + Constantes.ECART_LIGNES_ALIEN * ligne, "/images/alienBas1.png", "/images/alienBas2.png");
             }
@@ -225,5 +224,13 @@ public class GroupeAliens {
             }
         }
         return posBasFinal;
+    }
+
+    public void setVitesse(float vitesse) {
+        this.vitesse = vitesse;
+    }
+
+    public float getVitesse() {
+        return vitesse;
     }
 }
